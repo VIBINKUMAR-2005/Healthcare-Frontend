@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+@layer base {
+  * { box-sizing: border-box; }
+
+  body {
+    @apply font-sans text-slate-800 antialiased;
+    /* Fallback for non-dashboard pages (auth screens etc.) */
+    background-color: #f8fafc;
+  }
+
+  /* Teal-tinted minimal scrollbar */
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb  { background: #5eead4; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #0d9488; }
+
+  h1, h2, h3, h4, h5, h6 { @apply font-semibold tracking-tight text-slate-800; }
+}
+
+/* ─── Components ─────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Layout canvas ───────────────────────────────────────────────────── */
+
+  /* The outer app shell (replaces bg-gray-50) */
+  .app-shell {
+    @apply flex h-screen overflow-hidden;
+    /* Sophisticated gradient: slate → near-white → icy cyan whisper */
+    background-image:
+      radial-gradient(ellipse at 75% 0%, rgba(6, 182, 212, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(13, 148, 136, 0.05) 0%, transparent 45%),
+      linear-gradient(160deg, #f1f5f9 0%, #f8fafc 45%, #ecfeff 100%);
+  }
+
+  /* The scrollable main content pane */
+  .main-pane {
+    @apply flex-1 overflow-y-auto px-4 py-6 md:px-6 lg:px-8;
+  }
+
+  /* ── Cards ───────────────────────────────────────────────────────────── */
+
+  /* Standard content card — pure white floating over gradient bg */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-100/80 shadow-card p-6;
+  }
+
+  /* Card with lift-on-hover */
+  .card-hover {
+    @apply card transition-all duration-200 cursor-pointer
+           hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  /* Stat card — tinted gradient face + floating shadow */
+  .stat-card {
+    @apply bg-white rounded-2xl border border-slate-100/80 shadow-card-stat p-5
+           transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  /* ── Buttons ─────────────────────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-teal-600 hover:bg-teal-700 active:bg-teal-800
+           text-white text-sm font-semibold
+           px-4 py-2.5 rounded-xl
+           shadow-sm hover:shadow-md
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none
+           focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white hover:bg-slate-50 active:bg-slate-100
+           text-slate-700 text-sm font-semibold
+           px-4 py-2.5 rounded-xl
+           border border-slate-200 hover:border-teal-300
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+           bg-rose-500 hover:bg-rose-600 active:bg-rose-700
+           text-white text-sm font-semibold
+           px-4 py-2.5 rounded-xl
+           shadow-sm hover:shadow-md
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           bg-transparent hover:bg-teal-50 active:bg-teal-100
+           text-teal-700 text-sm font-semibold
+           px-4 py-2.5 rounded-xl
+           border border-transparent hover:border-teal-200
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2;
+  }
+
+  /* ── Form elements ───────────────────────────────────────────────────── */
+  .input-field {
+    @apply w-full px-4 py-2.5
+           bg-white border border-slate-200 rounded-xl
+           text-slate-800 placeholder-slate-400 text-sm
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400
+           hover:border-slate-300;
+  }
+
+  .label {
+    @apply block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5;
+  }
+
+  /* ── Status badges ───────────────────────────────────────────────────── */
+  .badge-pending {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full
+           text-xs font-semibold
+           bg-amber-50 text-amber-700 border border-amber-200/80;
+  }
+  .badge-approved {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full
+           text-xs font-semibold
+           bg-teal-50 text-teal-700 border border-teal-200/80;
+  }
+  .badge-completed {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full
+           text-xs font-semibold
+           bg-cyan-50 text-cyan-700 border border-cyan-200/80;
+  }
+  .badge-cancelled {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full
+           text-xs font-semibold
+           bg-rose-50 text-rose-600 border border-rose-200/80;
+  }
+
+  /* ── Typography helpers ──────────────────────────────────────────────── */
+  .section-title    { @apply text-xl font-bold text-slate-800 tracking-tight; }
+  .section-subtitle { @apply text-sm text-slate-500 mt-0.5 font-normal; }
+  .page-title       { @apply text-2xl font-bold text-slate-800 tracking-tight; }
+
+  /* ── Table ───────────────────────────────────────────────────────────── */
+  .table-header {
+    @apply text-left px-4 py-3 text-[11px] font-bold text-slate-400
+           uppercase tracking-widest bg-slate-50/80 border-b border-slate-200;
+  }
+  .table-cell {
+    @apply px-4 py-3.5 text-sm text-slate-700 border-b border-slate-100;
+  }
+  .table-row-hover {
+    @apply hover:bg-teal-50/30 transition-colors duration-100;
+  }
+
+  /* ── Divider ─────────────────────────────────────────────────────────── */
+  .divider { @apply border-t border-slate-100 my-4; }
+
+  /* ── Role chips ──────────────────────────────────────────────────────── */
+  .role-patient { @apply bg-teal-50 text-teal-700 border border-teal-200/80; }
+  .role-doctor  { @apply bg-cyan-50 text-cyan-700 border border-cyan-200/80; }
+  .role-admin   { @apply bg-violet-50 text-violet-700 border border-violet-200/80; }
+}
+
+/* ─── Utilities ──────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Glass-morphism helper for banners that sit on the gradient */
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+
+  /* Subtle inner top-border highlight on cards */
+  .card-inset {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      0 1px 3px rgba(15,118,110,0.05),
+      0 1px 2px rgba(0,0,0,0.04);
+  }
+}
