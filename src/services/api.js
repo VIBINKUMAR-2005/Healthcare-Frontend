@@ -8,7 +8,7 @@ import axios from 'axios';
  * as that would bypass the proxy and cause CORS errors in development.
  */
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://healthcare-backend-njau.onrender.com/api',
   timeout: 15000, // 15s — avoids silent hangs if backend is down
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
