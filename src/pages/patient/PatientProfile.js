@@ -6,7 +6,7 @@ import Spinner from '../../components/common/Spinner';
 
 const PatientProfile = () => {
   const { user, updateUser } = useAuth();
-  const [profile, setProfile] = useState(null);
+  const [_, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
